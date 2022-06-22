@@ -8,7 +8,10 @@ config = {
 
 # This is the json API url
 url = 'https://housing.gatech.edu/rooms/FreeRooms.json?_=1655904358700'
-os.remove('FreeRooms.json') 
+try:
+  os.remove('FreeRooms.json') 
+except:
+  pass
 filename = wget.download(url); print()
 
 Fitten = []
