@@ -12,8 +12,8 @@
 import wget, json, os
 
 config = {
-  'gender': 'Male', # This is the gender type of the rooms counted -- [Male, Female, Neutral, All]
-  'capacity': 'Double', # This is the type of rooms counted -- [Double, Triple, Quad, Suite, All]
+  'gender': 'All', # This is the gender type of the rooms counted -- [Male, Female, Neutral, All]
+  'capacity': 'All', # This is the type of rooms counted -- [Double, Triple, Quad, Suite, All]
   'beds': False, # This will toggle the printing of the individual beds -- [True, False]
   'csv': True, # This will toggle the export to the csv file -- [True, False]
   'silent': False # This will toggle the printing of the room data -- [True, False]
@@ -240,6 +240,10 @@ def exportRoomData(data):
     f.write(data[0]['LastUpdated'] + ',' + str(len(Fitten)) + ',' + str(len(Glenn)) + ',' + str(len(Towers)) + ',' + str(len(Montag)) + ',' + str(len(Freeman)) + ',' + str(len(Harrison)) + ',' + str(len(Folk)) + ',' + str(len(Hefner)) + ',' + str(len(Armstrong)) + ',' + str(len(Field)) + ',' + str(len(Hopkins)) + ',' + str(len(Hanson)) + ',' + str(len(WoodruffS)) + ',' + str(len(WoodruffN)) + ',' + str(len(Smith)) + ',' + str(len(Brown)) + ',' + str(len(Caldwell)) + '\n')
 
 def __main__():
+  if config['csv']:
+    config['gender'] = 'All'
+    config['capacity'] = 'All'
+
   with open('FreeRooms.json') as json_file:
     data = json.load(json_file)
     length = len(data)
