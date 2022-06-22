@@ -53,10 +53,10 @@ def printRoomData(data):
     beds.append(f"Rooms: [{', '.join(i['RoomNumber'] for i in data)}]")
   if config['beds']:   
     for i in range(0,len(tableDorms)):
-      print(tabulate([tableDorms[i]], headers = ['Dorm', 'Rooms']) + '\n')
-      print(beds[i] + '\n\n')
+      print(tabulate([tableDorms[i]], headers = ['Dorm', 'Beds Left']))
+      print(beds[i] + '\n')
   else:
-    print(tabulate(tableDorms, headers = ['Dorm', 'Rooms'], tablefmt = 'fancy_grid')) 
+    print(tabulate(tableDorms, headers = ['Dorm', 'Beds Left'])) 
 
 def exportRoomData(data):
   try:
