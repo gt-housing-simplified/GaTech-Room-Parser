@@ -33,7 +33,6 @@ print()
 
 dorms = {}
 
-
 def checkRoom(room):
     buildingName = room['BuildingName']
     if not dorms.get(buildingName):
