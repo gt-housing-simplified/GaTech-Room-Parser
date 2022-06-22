@@ -12,7 +12,7 @@
 import wget, json, os
 
 config = {
-  'gender': 'All', # This is the gender type of the rooms counted -- [Male, Female, Neutral, All]
+  'gender': 'Male', # This is the gender type of the rooms counted -- [Male, Female, Neutral, All]
   'capacity': 'All', # This is the type of rooms counted -- [Double, Triple, Quad, Suite, All]
   'beds': False # This will toggle the printing of the individual beds -- [True, False]
 }
@@ -39,6 +39,9 @@ Hopkins = []
 Hanson = []
 WoodruffS = []
 WoodruffN = []
+Smith = []
+Brown = []
+Caldwell = []
 
 def checkRoom(room):
   buildingName = room['BuildingName'] 
@@ -84,6 +87,15 @@ def checkRoom(room):
         return True
       case 'WoodruffNorth':
         WoodruffN.append(room)
+        return True
+      case 'Smith':
+        Smith.append(room)
+        return True
+      case 'Brown':
+        Brown.append(room)
+        return True
+      case 'Caldwell':
+        Caldwell.append(room)
         return True
       case _:
         return False
@@ -185,6 +197,27 @@ def printRoomData():
   if config['beds']:
     tempList.clear()
     for i in WoodruffN:
+      tempList.append(i['RoomNumber'])
+    print(tempList)
+
+  print("Smith:\t\t", len(Smith)) #, "\t/ 64")
+  if config['beds']:
+    tempList.clear()
+    for i in Smith:
+      tempList.append(i['RoomNumber'])
+    print(tempList)
+
+  print("Brown:\t\t", len(Brown)) #, "\t/ 64")
+  if config['beds']:
+    tempList.clear()
+    for i in Brown:
+      tempList.append(i['RoomNumber'])
+    print(tempList)
+
+  print("Caldwell:\t", len(Caldwell)) #, "\t/ 64")
+  if config['beds']:
+    tempList.clear()
+    for i in Caldwell:
       tempList.append(i['RoomNumber'])
     print(tempList)
 
