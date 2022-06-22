@@ -1,13 +1,11 @@
 # Designed by Ian Boraks
+# https://github.com/Ian-Boraks/GaTech-Room-Parser
 #
 # THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
 # INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 # IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
 # WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
 # THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-#
-# Needs python version >=3.10.0
-# This is because of the use of match statements in the checkRoom() function
 
 from tabulate import tabulate
 import wget
@@ -16,11 +14,11 @@ import os
 
 config = {
   # This is the gender type of the rooms counted -- [Male, Female, Neutral, All]
-  'gender': 'All', 
+  'gender': 'Male', 
   # This is the type of rooms counted -- [Double, Triple, Quad, Suite, All]
   'capacity': 'All',
   # This will toggle the printing of the individual beds -- [True, False] 
-  'beds': True, 
+  'beds': False, 
   # ! WIP -- Keep at False ! This will toggle the export to the csv file -- [True, False] 
   'csv': False, 
   # This will toggle the printing of the room data -- [True, False]
