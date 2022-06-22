@@ -1,9 +1,9 @@
 import wget, json, os
 
 config = {
-  'gender': 'Male', # This is the gender type of the rooms counted
-  'capacity': 'Double', # This is the type of rooms counted
-  'beds': False # This will toggle the printing of the individual beds
+  'gender': 'Male', # This is the gender type of the rooms counted -- [Male, Female, Neutral, All]
+  'capacity': 'Double', # This is the type of rooms counted -- [Double, Triple, Quad, Suite, All]
+  'beds': False # This will toggle the printing of the individual beds -- [True, False]
 }
 
 # This is the json API url
@@ -157,7 +157,7 @@ with open('FreeRooms.json') as json_file:
   length = len(data)
 
   for i in range(0,length):
-    if config['gender'] != data[i]['Gender'] or config['capacity'] != data[i]['Capacity']:
+    if (config['gender'] != data[i]['Gender'] and config['gender'] != 'All') or (config['capacity'] != data[i]['Capacity'] and config['capacity'] != 'All'):
       continue
     checkRoom(data[i])
   
