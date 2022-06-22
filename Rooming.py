@@ -3,7 +3,7 @@ import wget, json, os
 config = {
   'gender': 'Male', # This is the gender type of the rooms counted
   'capacity': 'Double', # This is the type of rooms counted
-  'beds': True # This will toggle the printing of the individual beds
+  'beds': False # This will toggle the printing of the individual beds
 }
 
 # This is the json API url
@@ -73,76 +73,76 @@ def checkRoom(room):
 def printRoomData():
   tempList = []
 
-  print("Fitten: ", len(Fitten))
+  print("Fitten:\t\t", len(Fitten)) #, "\t/ 64")
   if config['beds']:
     for i in Fitten:
       tempList.append(i['RoomNumber'])
     print(tempList)
 
-  print("Glenn: ", len(Glenn))
+  print("Glenn:\t\t", len(Glenn)) #, "\t/ 176")
   if config['beds']:
     tempList.clear()
     for i in Glenn:
       tempList.append(i['RoomNumber'])
     print(tempList)
 
-  print("Towers: ", len(Towers))
+  print("Towers:\t\t", len(Towers)) #, "\t/ 151")
   if config['beds']:
     tempList.clear()
     for i in Towers:
       tempList.append(i['RoomNumber'])
     print(tempList)
 
-  print("Montag: ", len(Montag))
+  print("Montag:\t\t", len(Montag)) #, "\t/ 34")
   if config['beds']:
     tempList.clear()
     for i in Montag:
       tempList.append(i['RoomNumber'])
     print(tempList)
 
-  print("Freeman: ", len(Freeman))
+  print("Freeman:\t", len(Freeman)) #, "\t/ 30")
   if config['beds']:
     tempList.clear()
     for i in Freeman:
       tempList.append(i['RoomNumber'])
     print(tempList)
 
-  print("Harrison: ", len(Harrison))
+  print("Harrison:\t", len(Harrison)) #, "\t/ 102")
   if config['beds']:
     tempList.clear()
     for i in Harrison:
       tempList.append(i['RoomNumber'])
     print(tempList)
 
-  print("Hefner: ", len(Hefner))
+  print("Hefner:\t\t", len(Hefner)) #, "\t/ 70")
   if config['beds']:
     tempList.clear()
     for i in Hefner:
       tempList.append(i['RoomNumber'])
     print(tempList)
 
-  print("Armstrong: ", len(Armstrong))
+  print("Armstrong:\t", len(Armstrong)) #, "\t/ 36")
   if config['beds']:
     tempList.clear()
     for i in Armstrong:
       tempList.append(i['RoomNumber'])
     print(tempList)
 
-  print("Field: ", len(Field))
+  print("Field:\t\t", len(Field)) #, "\t/ 60")
   if config['beds']:
     tempList.clear()
     for i in Field:
       tempList.append(i['RoomNumber'])
     print(tempList)
 
-  print("Hopkins: ", len(Hopkins))
+  print("Hopkins:\t", len(Hopkins)) #, "\t/ 64")
   if config['beds']:
     tempList.clear()
     for i in Hopkins:
       tempList.append(i['RoomNumber'])
     print(tempList)
 
-  print("Hanson: ", len(Hanson))
+  print("Hanson:\t\t", len(Hanson)) #, "\t/ 84")
   if config['beds']:
     tempList.clear()
     for i in Hanson:
