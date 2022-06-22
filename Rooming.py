@@ -9,6 +9,7 @@
 # Needs python version >=3.10.0
 # This is because of the use of match statements in the checkRoom() function
 
+from tabulate import tabulate
 import wget
 import json
 import os
@@ -19,7 +20,7 @@ config = {
   # This is the type of rooms counted -- [Double, Triple, Quad, Suite, All]
   'capacity': 'All',
   # This will toggle the printing of the individual beds -- [True, False] 
-  'beds': False, 
+  'beds': True, 
   # ! WIP -- Keep at False ! This will toggle the export to the csv file -- [True, False] 
   'csv': False, 
   # This will toggle the printing of the room data -- [True, False]
@@ -29,25 +30,33 @@ config = {
 # This is the json API url
 url = 'https://housing.gatech.edu/rooms/FreeRooms.json?_=1655904358700'
 try:
-    os.remove('FreeRooms.json')
+  os.remove('FreeRooms.json')
 except:
-    pass
+  pass
 filename = wget.download(url)
 print()
 
 dorms = {}
 
 def checkRoom(room):
-    buildingName = room['BuildingName']
-    if not dorms.get(buildingName):
-        dorms[buildingName] = []
-    dorms[buildingName].append(room)
+  buildingName = room['BuildingName']
+  if not dorms.get(buildingName):
+    dorms[buildingName] = []
+  dorms[buildingName].append(room)
+
 
 def printRoomData(data):
-    for name, data in dorms.items():
-        print(f"{name}\t{len(data)}")
-        if config['beds']:
-            print(f"Rooms: [{', '.join(i['RoomNumber'] for i in data)}]\n")
+  tableDorms = []
+  beds = []
+  for name, data in dorms.items():
+    tableDorms.append([name, len(data)])
+    beds.append(f"Rooms: [{', '.join(i['RoomNumber'] for i in data)}]")
+  if config['beds']:   
+    for i in range(0,len(tableDorms)):
+      print(tabulate([tableDorms[i]], headers = ['Dorm', 'Rooms']) + '\n')
+      print(beds[i] + '\n\n')
+  else:
+    print(tabulate(tableDorms, headers = ['Dorm', 'Rooms'], tablefmt = 'fancy_grid')) 
 
 def exportRoomData(data):
   try:
