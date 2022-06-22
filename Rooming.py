@@ -1,8 +1,19 @@
+# Designed by Ian Boraks
+#
+# THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+# INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+# IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+# WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
+# THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
+# Needs python version >=3.10
+# This is because of the use of match statements in the checkRoom function
+
 import wget, json, os
 
 config = {
-  'gender': 'Male', # This is the gender type of the rooms counted -- [Male, Female, Neutral, All]
-  'capacity': 'Double', # This is the type of rooms counted -- [Double, Triple, Quad, Suite, All]
+  'gender': 'All', # This is the gender type of the rooms counted -- [Male, Female, Neutral, All]
+  'capacity': 'All', # This is the type of rooms counted -- [Double, Triple, Quad, Suite, All]
   'beds': False # This will toggle the printing of the individual beds -- [True, False]
 }
 
