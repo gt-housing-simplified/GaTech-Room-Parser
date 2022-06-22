@@ -6,7 +6,7 @@
 # WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
 # THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
-# Needs python version >=3.10
+# Needs python version >=3.10.0
 # This is because of the use of match statements in the checkRoom function
 
 import wget, json, os
@@ -31,6 +31,7 @@ Towers = []
 Montag = []
 Freeman = []
 Harrison = []
+Folk = []
 Hefner = []
 Armstrong = []
 Field = []
@@ -59,6 +60,9 @@ def checkRoom(room):
         return True
       case 'Harrison':
         Harrison.append(room)
+        return True
+      case 'Folk':
+        Folk.append(room)
         return True
       case 'Hefner':
         Hefner.append(room)
@@ -128,6 +132,13 @@ def printRoomData():
       tempList.append(i['RoomNumber'])
     print(tempList)
 
+  print("Folk:\t\t", len(Folk)) #, "\t/ 30")
+  if config['beds']:
+    tempList.clear()
+    for i in Folk:
+      tempList.append(i['RoomNumber'])
+    print(tempList)
+
   print("Hefner:\t\t", len(Hefner)) #, "\t/ 70")
   if config['beds']:
     tempList.clear()
@@ -160,6 +171,20 @@ def printRoomData():
   if config['beds']:
     tempList.clear()
     for i in Hanson:
+      tempList.append(i['RoomNumber'])
+    print(tempList)
+
+  print("Woodruff South:\t", len(WoodruffS)) #, "\t/ 64")
+  if config['beds']:
+    tempList.clear()
+    for i in WoodruffS:
+      tempList.append(i['RoomNumber'])
+    print(tempList)
+
+  print("Woodruff North:\t", len(WoodruffN)) #, "\t/ 64")
+  if config['beds']:
+    tempList.clear()
+    for i in WoodruffN:
       tempList.append(i['RoomNumber'])
     print(tempList)
 
