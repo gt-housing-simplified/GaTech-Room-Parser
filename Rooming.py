@@ -161,7 +161,8 @@ with open('FreeRooms.json') as json_file:
       continue
     checkRoom(data[i])
   
-  print("\nUpdated on: " + data[0]['LastUpdated'] + "\n")
+  print("\nUpdated on: " + data[0]['LastUpdated'] + "\nUsing Config: ", end = "")
+  print(config); print()
   printRoomData()
 
 
