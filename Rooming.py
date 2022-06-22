@@ -7,12 +7,12 @@
 # THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 # Needs python version >=3.10.0
-# This is because of the use of match statements in the checkRoom function
+# This is because of the use of match statements in the checkRoom() function
 
 import wget, json, os
 
 config = {
-  'gender': 'Male', # This is the gender type of the rooms counted -- [Male, Female, Neutral, All]
+  'gender': 'All', # This is the gender type of the rooms counted -- [Male, Female, Neutral, All]
   'capacity': 'All', # This is the type of rooms counted -- [Double, Triple, Quad, Suite, All]
   'beds': False # This will toggle the printing of the individual beds -- [True, False]
 }
