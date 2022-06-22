@@ -14,11 +14,16 @@ import json
 import os
 
 config = {
-  'gender': 'All', # This is the gender type of the rooms counted -- [Male, Female, Neutral, All]
-  'capacity': 'All', # This is the type of rooms counted -- [Double, Triple, Quad, Suite, All]
-  'beds': False, # This will toggle the printing of the individual beds -- [True, False]
-  'csv': True, # This will toggle the export to the csv file -- [True, False]
-  'silent': False # This will toggle the printing of the room data -- [True, False]
+  # This is the gender type of the rooms counted -- [Male, Female, Neutral, All]
+  'gender': 'All', 
+  # This is the type of rooms counted -- [Double, Triple, Quad, Suite, All]
+  'capacity': 'All',
+  # This will toggle the printing of the individual beds -- [True, False] 
+  'beds': False, 
+  # ! WIP -- Keep at False ! This will toggle the export to the csv file -- [True, False] 
+  'csv': False, 
+  # This will toggle the printing of the room data -- [True, False]
+  'silent': False 
 }
 
 # This is the json API url
@@ -38,8 +43,7 @@ def checkRoom(room):
         dorms[buildingName] = []
     dorms[buildingName].append(room)
 
-
-def printRoomData():
+def printRoomData(data):
     for name, data in dorms.items():
         print(f"{name}\t{len(data)}")
         if config['beds']:
@@ -78,7 +82,7 @@ def __main__():
     if not config['silent']:
       print("\nUpdated on: " + data[0]['LastUpdated'] + "\nUsing Config: ", end = "")
       print(config); print()
-      printRoomData()
+      printRoomData(data)
     else:
       print("Updated on: " + data[0]['LastUpdated'])
 
