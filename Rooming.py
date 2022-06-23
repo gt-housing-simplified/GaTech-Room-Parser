@@ -12,7 +12,7 @@
 #   -g <Male, Female, Neutral, All>
 #
 # Capacity (Room Type):
-#   -c <Double, Triple, Quad, Suite, 4 person, 6 person, All>
+#   -c <Double, Triple, Quad, Suite, 2 person, 4 person, 6 person, All>
 #
 # List Bed Names:
 #   -b
