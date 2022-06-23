@@ -9,7 +9,7 @@ Gender:
   `-g <Male, Female, Neutral, All>`
 
 Capacity (Room Type):
-  `-c <Double, Triple, Quad, Suite, All>`
+  `-c <Double, Triple, Quad, Suite, 4 person, 6 person All>`
 
 List Bed Names:
   `-b`
