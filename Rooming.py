@@ -171,8 +171,8 @@ def main():
     else:
       print("Updated on: " + data[0]['LastUpdated'])
 
-    if config['csv']:
-      exportRoomData(data)
+    # if config['csv']:
+    #   exportRoomData(data)
 
 
 if __name__ == "__main__":
