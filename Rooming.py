@@ -35,21 +35,21 @@ import sys
 
 # This config is only for defaults.
 config = {
-  'gender': 'All',
-  'capacity': 'All',
-  'empty': False,
-  'rooms': False,
-  'beds': False,
-  'csv': False,
-  'silent': False
+    'gender': 'All',
+    'capacity': 'All',
+    'empty': False,
+    'rooms': False,
+    'beds': False,
+    'csv': False,
+    'silent': False
 }
 
 # This is the json API url
 url = 'https://housing.gatech.edu/rooms/FreeRooms.json?_=1655904358700'
 try:
-  os.remove('FreeRooms.json')
+    os.remove('FreeRooms.json')
 except:
-  pass
+    pass
 filename = wget.download(url)
 print()
 
@@ -57,74 +57,78 @@ dorms, empty = {}, {}
 
 
 def checkRoom(room):
-  buildingName = room['BuildingName']
-  if not dorms.get(buildingName):
-    dorms[buildingName] = []
-  dorms[buildingName].append(room)
+    buildingName = room['BuildingName']
+    if not dorms.get(buildingName):
+        dorms[buildingName] = []
+    dorms[buildingName].append(room)
 
 
 def getRoom(room_type, room, truncate=1):
-  empty[room_type][0].append(room)
-  empty[room_type][1].add(room[:-truncate])
+    empty[room_type][0].append(room)
+    empty[room_type][1].add(room[:-truncate])
 
 
 def getEmpty(rooms, bed_letters):
-  empty_list = []
-  for room in rooms[1]:
-    if all(bed in rooms[0] for bed in (room + bed_i for bed_i in bed_letters)):
-        empty_list.append(room)
-  return empty_list
+    empty_list = []
+    for room in rooms[1]:
+        if all(bed in rooms[0] for bed in (room + bed_i for bed_i in bed_letters)):
+            empty_list.append(room)
+    return empty_list
 
 
 def printRoomData(data):
-  tableDorms, beds, empty_counts, rooms = [], [], [], []
+    tableDorms, beds, empty_counts, rooms = [], [], [], []
 
-  for name, data in dorms.items():
-    tableDorms.append([name, len(data)])
+    for name, data in dorms.items():
+        tableDorms.append([name, len(data)])
 
-    if config['empty'] or config['rooms']:
-        global empty  # need to change
+        if config['empty'] or config['rooms']:
+            global empty  # need to change
 
-        empty = {k: ([], set()) for k in ['Double', 'Triple', 'Quad', 'Suite Room', 'Suite', '2 person', '4 person', '6 person']}
+            empty = {k: ([], set()) for k in
+                     ['Double', 'Triple', 'Quad', 'Suite Room', 'Suite', '2 person', '4 person', '6 person']}
 
-        for room in data:
-          if room['Capacity'] == 'Suite':
-              getRoom('Suite Room', room['RoomNumber'])
-              getRoom('Suite', room['RoomNumber'], truncate=2)
-          else:
-              getRoom(room['Capacity'], room['RoomNumber'])
+            for room in data:
+                if room['Capacity'] == 'Suite':
+                    getRoom('Suite Room', room['RoomNumber'])
+                    getRoom('Suite', room['RoomNumber'], truncate=2)
+                else:
+                    getRoom(room['Capacity'], room['RoomNumber'])
 
-        empty['Double'] = getEmpty(empty['Double'], ['a', 'b'])
-        empty['Triple'] = getEmpty(empty['Triple'], ['a', 'b', 'c'])
-        empty['Quad'] = getEmpty(empty['Quad'], ['a', 'b', 'c', 'd'])
-        empty['Suite Room'] = getEmpty(empty['Suite Room'], ['a', 'b'])
-        empty['Suite'] = getEmpty(empty['Suite'], ['Aa', 'Ab', 'Ba', 'Bb'])
-        empty['2 person'] = getEmpty(empty['2 person'], ['A', 'B'])
-        empty['4 person'] = getEmpty(empty['4 person'], ['A', 'B', 'C', 'D'])
-        empty['6 person'] = getEmpty(empty['6 person'], ['A', 'B', 'C', 'D', 'E', 'F'])
+            empty['Double'] = getEmpty(empty['Double'], ['a', 'b'])
+            empty['Triple'] = getEmpty(empty['Triple'], ['a', 'b', 'c'])
+            empty['Quad'] = getEmpty(empty['Quad'], ['a', 'b', 'c', 'd'])
+            empty['Suite Room'] = getEmpty(empty['Suite Room'], ['a', 'b'])
+            empty['Suite'] = getEmpty(empty['Suite'], ['Aa', 'Ab', 'Ba', 'Bb'])
+            empty['2 person'] = getEmpty(empty['2 person'], ['A', 'B'])
+            empty['4 person'] = getEmpty(empty['4 person'], ['A', 'B', 'C', 'D'])
+            empty['6 person'] = getEmpty(empty['6 person'], ['A', 'B', 'C', 'D', 'E', 'F'])
 
-        empty = {room_type: rooms for room_type, rooms in empty.items() if rooms}
-        empty_count = {room_type: len(rooms) for room_type, rooms in empty.items()}
+            empty = {room_type: rooms for room_type, rooms in empty.items() if rooms}
+            empty_count = {room_type: len(rooms) for room_type, rooms in empty.items()}
 
-        empty_counts.append(empty_count)
-        rooms.append(empty)
-        # need to make more readable
+            empty_counts.append(empty_count)
+            rooms.append(empty)
 
-    if config['beds']:
-        beds.append(f"Available Beds: [{', '.join(i['RoomNumber'] for i in data)}]")
-
-  if config['beds'] or config['empty']:
-    for i in range(len(tableDorms)):
-        print(tabulate([tableDorms[i]], headers=['Dorm', 'Beds Left']))
-        if config['empty']:
-          print(f"Empty Room Count: {empty_counts[i]}")
-        if config['rooms']:
-          print(f"Empty Rooms: {rooms[i]}")
         if config['beds']:
-          print(beds[i])
-        print()
-  else:
-    print(tabulate(tableDorms, headers=['Dorm', 'Beds Left']))
+            beds.append([i['RoomNumber'] for i in data])
+
+    if config['empty'] or config['rooms'] or config['beds']:
+        for i in range(len(tableDorms)):
+            print(tableDorms[i][0])
+            table = [['Beds Left', tableDorms[i][1]]]
+            if config['beds']:
+                table.append(['', ', '.join(beds[i])])
+            if config['empty']:
+                table.append(['Empty Rooms',
+                              ', '.join([f'{count} {room_type}s' for room_type, count in empty_counts[i].items()])])
+            if config['rooms']:
+                for rooms_per_type in [f"{room_type}s: {', '.join(rms)}" for room_type, rms in rooms[i].items()]:
+                    table.append(['', rooms_per_type])
+            print(tabulate(table, maxcolwidths=[None, 150]))
+            print()
+    else:
+        print(tabulate(tableDorms, headers=['Dorm', 'Beds Left']))
 
 
 # def exportRoomData(data):
@@ -149,50 +153,50 @@ def printRoomData(data):
 #         len(Smith)) + ',' + str(len(Brown)) + ',' + str(len(Caldwell)) + '\n')
 
 def main():
-  if config['csv']:
-    config['gender'] = 'All'
-    config['capacity'] = 'All'
+    if config['csv']:
+        config['gender'] = 'All'
+        config['capacity'] = 'All'
 
-  with open('FreeRooms.json') as json_file:
-    data = json.load(json_file)
-    length = len(data)
+    with open('FreeRooms.json') as json_file:
+        data = json.load(json_file)
+        length = len(data)
 
-    for i in range(0, length):
-      if (config['gender'] != data[i]['Gender'] and config['gender'] != 'All') or (
-          config['capacity'] != data[i]['Capacity'] and config['capacity'] != 'All'):
-        continue
-      checkRoom(data[i])
+        for i in range(0, length):
+            if (config['gender'] != data[i]['Gender'] and config['gender'] != 'All') or (
+                    config['capacity'] != data[i]['Capacity'] and config['capacity'] != 'All'):
+                continue
+            checkRoom(data[i])
 
-    if not config['silent']:
-      print("\nUpdated on: " + data[0]['LastUpdated'] + "\nUsing Config: ", end="")
-      print(config);
-      print()
-      printRoomData(data)
-    else:
-      print("Updated on: " + data[0]['LastUpdated'])
+        if not config['silent']:
+            print("\nUpdated on: " + data[0]['LastUpdated'] + "\nUsing Config: ", end="")
+            print(config);
+            print()
+            printRoomData(data)
+        else:
+            print("Updated on: " + data[0]['LastUpdated'])
 
-    # if config['csv']:
-    #   exportRoomData(data)
+        # if config['csv']:
+        #   exportRoomData(data)
 
 
 if __name__ == "__main__":
-  try:
-    if ('-g' in sys.argv):
-      config['gender'] = sys.argv[sys.argv.index('-g') + 1]
-    if ('-c' in sys.argv):
-      config['capacity'] = sys.argv[sys.argv.index('-c') + 1]
-    if ('-e' in sys.argv):
-      config['empty'] = True
-    if ('-er' in sys.argv):
-      config['empty'] = True
-      config['rooms'] = True
-    if ('-b' in sys.argv):
-      config['beds'] = True
-    if ('-csv' in sys.argv):
-      config['csv'] = True
-    if ('-s' in sys.argv):
-      config['silent'] = True
-  except IndexError:
-    raise Exception('Invalid Command Line Arguments')
+    try:
+        if ('-g' in sys.argv):
+            config['gender'] = sys.argv[sys.argv.index('-g') + 1]
+        if ('-c' in sys.argv):
+            config['capacity'] = sys.argv[sys.argv.index('-c') + 1]
+        if ('-e' in sys.argv):
+            config['empty'] = True
+        if ('-er' in sys.argv):
+            config['empty'] = True
+            config['rooms'] = True
+        if ('-b' in sys.argv):
+            config['beds'] = True
+        if ('-csv' in sys.argv):
+            config['csv'] = True
+        if ('-s' in sys.argv):
+            config['silent'] = True
+    except IndexError:
+        raise Exception('Invalid Command Line Arguments')
 
 main()
