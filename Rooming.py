@@ -7,21 +7,34 @@
 # WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
 # THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+# To set up the config, use the following command line arguments:
+# Gender:
+#   -g <Male, Female, Neutral, All>
+#
+# Capacity (Room Type):
+#   -c <Double, Triple, Quad, Suite, All>
+#
+# List Bed Names:
+#   -b
+#
+# Output to a CSV File: ! WIP -- DO NOT USE !
+#   -csv
+#
+# Run Silently (Use w/ -csv):
+#   -s
+
 from tabulate import tabulate
 import wget
 import json
 import os
+import sys
 
+# This config is only for defaults.
 config = {
-  # This is the gender type of the rooms counted -- [Male, Female, Neutral, All]
-  'gender': 'Male', 
-  # This is the type of rooms counted -- [Double, Triple, Quad, Suite, All]
+  'gender': 'All', 
   'capacity': 'All',
-  # This will toggle the printing of the individual beds -- [True, False] 
   'beds': False, 
-  # ! WIP -- Keep at False ! This will toggle the export to the csv file -- [True, False] 
-  'csv': False, 
-  # This will toggle the printing of the room data -- [True, False]
+  'csv': False,
   'silent': False 
 }
 
@@ -72,7 +85,7 @@ def exportRoomData(data):
 
     f.write(data[0]['LastUpdated'] + ',' + str(len(Fitten)) + ',' + str(len(Glenn)) + ',' + str(len(Towers)) + ',' + str(len(Montag)) + ',' + str(len(Freeman)) + ',' + str(len(Harrison)) + ',' + str(len(Folk)) + ',' + str(len(Hefner)) + ',' + str(len(Armstrong)) + ',' + str(len(Field)) + ',' + str(len(Hopkins)) + ',' + str(len(Hanson)) + ',' + str(len(WoodruffS)) + ',' + str(len(WoodruffN)) + ',' + str(len(Smith)) + ',' + str(len(Brown)) + ',' + str(len(Caldwell)) + '\n')
 
-def __main__():
+def main():
   if config['csv']:
     config['gender'] = 'All'
     config['capacity'] = 'All'
@@ -95,7 +108,20 @@ def __main__():
 
     if config['csv']:
       exportRoomData(data)
-    
-    exit()
 
-__main__()
+if __name__ == "__main__":
+  try:
+    if ('-g' in sys.argv):
+      config['gender'] = sys.argv[sys.argv.index('-g') + 1]
+    if ('-c' in sys.argv):
+      config['capacity'] = sys.argv[sys.argv.index('-c') + 1]
+    if ('-csv' in sys.argv):
+      config['csv'] = True
+    if ('-b' in sys.argv):
+      config['beds'] = True
+    if ('-s' in sys.argv):
+      config['silent'] = True
+  except IndexError:
+    raise Exception('Invalid Command Line Arguments')
+
+  main()
