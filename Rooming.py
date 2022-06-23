@@ -85,8 +85,7 @@ def printRoomData(data):
     if config['empty'] or config['rooms']:
       global empty  # need to change
 
-      empty = {k: ([], set()) for k in
-           ['Double', 'Triple', 'Quad', 'Suite Room', 'Suite', '2 person', '4 person', '6 person']}
+      empty = {k: ([], set()) for k in ['Double', 'Triple', 'Quad', 'Suite Room', 'Suite', '2 person', '4 person', '6 person']}
 
       for room in data:
         if room['Capacity'] == 'Suite':
@@ -120,8 +119,7 @@ def printRoomData(data):
       if config['beds']:
         table.append(['', ', '.join(beds[i])])
       if config['empty']:
-        table.append(['Empty Rooms',
-                ', '.join([f'{count} {room_type}s' for room_type, count in empty_counts[i].items()])])
+        table.append(['Empty Rooms',', '.join([f'{count} {room_type}s' for room_type, count in empty_counts[i].items()])])
       if config['rooms']:
         for rooms_per_type in [f"{room_type}s: {', '.join(rms)}" for room_type, rms in rooms[i].items()]:
           table.append(['', rooms_per_type])
@@ -141,8 +139,7 @@ def main():
     length = len(data)
 
     for i in range(0, length):
-      if (config['gender'] != data[i]['Gender'] and config['gender'] != 'All') or (
-          config['capacity'] != data[i]['Capacity'] and config['capacity'] != 'All'):
+      if (config['gender'] != data[i]['Gender'] and config['gender'] != 'All') or (config['capacity'] != data[i]['Capacity'] and config['capacity'] != 'All'):
         continue
       checkRoom(data[i])
 
