@@ -8,20 +8,21 @@ The data is collected from https://housing.gatech.edu/available-rooms using an A
 
 ---
 To set up the config, use the following command line arguments:
+
 Gender:
-  `-g <Male, Female, Neutral, All>`
+>  `-g <Male, Female, Neutral, All>`
 
 Capacity (Room Type):
-  `-c <Double, Triple, Quad, Suite, All>`
+>  `-c <Double, Triple, Quad, Suite, All>`
 
 List Bed Names:
-  `-b`
+>  `-b`
 
 Output to a CSV File: ! WIP -- DO NOT USE !
-  `-csv`
+>  `-csv`
 
 Run Silently (Use w/ -csv):
-  `-s`
+>  `-s`
 
 ---
 Example outputs:
