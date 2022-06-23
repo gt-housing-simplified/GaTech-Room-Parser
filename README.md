@@ -1,27 +1,37 @@
-# GaTech-Room-Parser
+# GaTech-Room-Parser [![Run on Repl.it](https://repl.it/badge/github/Ian-Boraks/GaTech-Room-Parser)](https://repl.it/github/Ian-Boraks/GaTech-Room-Parser)
+
 Used for displaying the number of beds left for GaTech housing.
 
 The data is collected from https://housing.gatech.edu/available-rooms using an API call to https://housing.gatech.edu/rooms/FreeRooms.json?_=1655904358700
 
 ---
+
 To set up the config, use the following command line arguments:
+
 Gender:
-  `-g <Male, Female, Neutral, All>`
+
+> `-g <Male, Female, Neutral, All>`
 
 Capacity (Room Type):
-  `-c <Double, Triple, Quad, Suite, 4 person, 6 person All>`
+
+> `-c <Double, Triple, Quad, Suite, 4 person, 6 person All>`
 
 List Bed Names:
-  `-b`
+
+> `-b`
 
 Output to a CSV File: ! WIP -- DO NOT USE !
-  `-csv`
+
+> `-csv`
 
 Run Silently (Use w/ -csv):
-  `-s`
+
+> `-s`
 
 ---
+
 Example outputs:
+
 ```
 Updated on: 2022-06-22 18:50:03
 Using Config: {'gender': 'All', 'capacity': 'All', 'beds': False, 'csv': False, 'silent': False}
@@ -45,6 +55,7 @@ Smith                             268
 Woodruff North                    232
 Woodruff South                    219
 ```
+
 ```
 Updated on: 2022-06-22 18:50:03
 Using Config: {'gender': 'All', 'capacity': 'All', 'beds': True, 'csv': False, 'silent': False}
@@ -57,7 +68,7 @@ Rooms: [ARM101a, ARM101b, ARM102a, ARM102b, ARM103a, ARM103b, ARM104a, ARM104b, 
 Dorm      Beds Left
 ------  -----------
 Brown            50
-Rooms: [BRN102a, BRN102b, BRN103a, BRN103b, BRN104a, BRN104b, BRN105a, BRN105b, BRN106a, BRN106b, BRN107a, BRN107b, BRN109a, BRN109b, BRN110a, BRN110b, BRN111a, BRN111b, BRN113a, BRN113b, BRN114b, BRN209b, BRN214b, BRN217b, BRN301a, BRN301b, BRN302a, BRN302b, BRN304a, BRN304b, BRN305a, BRN305b, BRN306a, BRN306b, BRN307a, BRN307b, BRN308a, BRN308b, BRN309a, BRN309b, BRN310a, BRN310b, BRN311a, BRN311b, BRN312a, BRN312b, BRN313a, BRN313b, BRN314a, BRN314b]       
+Rooms: [BRN102a, BRN102b, BRN103a, BRN103b, BRN104a, BRN104b, BRN105a, BRN105b, BRN106a, BRN106b, BRN107a, BRN107b, BRN109a, BRN109b, BRN110a, BRN110b, BRN111a, BRN111b, BRN113a, BRN113b, BRN114b, BRN209b, BRN214b, BRN217b, BRN301a, BRN301b, BRN302a, BRN302b, BRN304a, BRN304b, BRN305a, BRN305b, BRN306a, BRN306b, BRN307a, BRN307b, BRN308a, BRN308b, BRN309a, BRN309b, BRN310a, BRN310b, BRN311a, BRN311b, BRN312a, BRN312b, BRN313a, BRN313b, BRN314a, BRN314b]
 
 Dorm                       Beds Left
 -----------------------  -----------
@@ -129,6 +140,7 @@ Dorm              Beds Left
 Woodruff South          219
 Rooms: [WDS103Bb, WDS104Aa, WDS104Ab, WDS104Ba, WDS105Ab, WDS106Aa, WDS106Ab, WDS106Ba, WDS106Bb, WDS108Aa, WDS108Ab, WDS108Ba, WDS108Bb, WDS201Aa, WDS201Ab, WDS201Ba, WDS201Bb, WDS203Ba, WDS203Bb, WDS204Ab, WDS204Ab, WDS206Aa, WDS206Ab, WDS206Ba, WDS206Bb, WDS207Aa, WDS207Ab, WDS207Ba, WDS207Bb, WDS208Ab, WDS208Ba, WDS208Bb, WDS209Aa, WDS209Ab, WDS209Ba, WDS209Bb, WDS210Ba, WDS210Bb, WDS213Ba, WDS213Bb, WDS214Aa, WDS214Ab, WDS217Aa, WDS217Ab, WDS217Ba, WDS217Bb, WDS219Aa, WDS219Ab, WDS219Ba, WDS219Bb, WDS301Ba, WDS301Bb, WDS303Ba, WDS303Bb, WDS304Aa, WDS304Ab, WDS304Ba, WDS304Bb, WDS305Aa, WDS305Ab, WDS305Ba, WDS305Bb, WDS306Aa, WDS306Ab, WDS306Ba, WDS306Bb, WDS307Aa, WDS307Ab, WDS307Ba, WDS307Bb, WDS308Aa, WDS308Ab, WDS308Ba, WDS308Bb, WDS309Aa, WDS309Ab, WDS309Ba, WDS309Bb, WDS310Bb, WDS313Aa, WDS313Ab, WDS313Ba, WDS313Bb, WDS314Aa, WDS314Ab, WDS314Ba, WDS314Bb, WDS315Aa, WDS315Ab, WDS315Ba, WDS315Bb, WDS316Aa, WDS316Ab, WDS316Ba, WDS316Bb, WDS317Aa, WDS317Ab, WDS317Ba, WDS317Bb, WDS319Aa, WDS319Ab, WDS319Ba, WDS319Bb, WDS401Aa, WDS401Ab, WDS401Ba, WDS401Bb, WDS403Ba, WDS403Bb, WDS405Aa, WDS405Ab, WDS406Aa, WDS406Ab, WDS406Ba, WDS406Bb, WDS407Aa, WDS407Ab, WDS407Ba, WDS407Bb, WDS408Aa, WDS408Ab, WDS408Ba, WDS408Bb, WDS410Ba, WDS410Bb, WDS413Aa, WDS413Ab, WDS413Ba, WDS413Bb, WDS414Aa, WDS414Ab, WDS414Ba, WDS414Bb, WDS415Aa, WDS415Ab, WDS415Ba, WDS415Bb, WDS416Aa, WDS416Ab, WDS416Ba, WDS416Bb, WDS417Aa, WDS417Ab, WDS417Ba, WDS417Bb, WDS418Aa, WDS418Ab, WDS418Ba, WDS418Bb, WDS418Bb, WDS419Aa, WDS419Ab, WDS419Ba, WDS419Bb, WDS420Aa, WDS420Ab, WDS420Ba, WDS420Bb, WDS501Ba, WDS501Bb, WDS503Ba, WDS503Bb, WDS503Bb, WDS504Aa, WDS504Ab, WDS504Ba, WDS504Bb, WDS505Aa, WDS505Ab, WDS505Ba, WDS505Bb, WDS506Aa, WDS506Ab, WDS506Ba, WDS506Bb, WDS507Aa, WDS507Ab, WDS507Ba, WDS507Bb, WDS508Aa, WDS508Ab, WDS508Ba, WDS508Bb, WDS509Aa, WDS509Ab, WDS509Ba, WDS509Bb, WDS510Ba, WDS510Bb, WDS513Aa, WDS513Ab, WDS513Ba, WDS513Bb, WDS514Aa, WDS514Ab, WDS514Ba, WDS514Bb, WDS515Aa, WDS515Ab, WDS515Ba, WDS515Bb, WDS516Aa, WDS516Ab, WDS516Ba, WDS516Bb, WDS517Aa, WDS517Ab, WDS517Ba, WDS517Bb, WDS518Ba, WDS518Bb, WDS519Aa, WDS519Ab, WDS519Ba, WDS519Bb, WDS520Aa, WDS520Ab, WDS520Ba, WDS520Bb]
 ```
+
 Designed by Ian Boraks
 https://github.com/Ian-Boraks/GaTech-Room-Parser
 
