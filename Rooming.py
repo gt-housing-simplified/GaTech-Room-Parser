@@ -32,6 +32,7 @@ import wget
 import json
 import os
 import sys
+import time
 
 # This config is only for defaults.
 config = {
@@ -45,7 +46,7 @@ config = {
 }
 
 # This is the json API url
-url = 'https://housing.gatech.edu/rooms/FreeRooms.json?_=1655904358700'
+url = f'https://housing.gatech.edu/available-rooms-dir/FreeRooms.json?_={round(time.time()*1000)}'
 try:
   os.remove('FreeRooms.json')
 except:
