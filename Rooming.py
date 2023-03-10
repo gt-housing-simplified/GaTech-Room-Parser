@@ -9,7 +9,7 @@
 
 # To set up the config, use the following command line arguments:
 # Gender:
-#   -g <Male, Female, Neutral, All>
+#   -g <Male, Female, Neutral, All, Dynamic>
 #
 # Capacity (Room Type):
 #   -c <Double, Triple, Quad, Suite, 2 person, 4 person, 6 person, All>
@@ -182,7 +182,7 @@ def main():
 
         for i in range(0, length):
             if (
-                config["gender"] != data[i]["Gender"] and config["gender"] != "All"
+                config["gender"] != data[i]["Gender"] and config["gender"] != "All" and data[i]["Gender"] != "Dynamic"
             ) or (
                 config["capacity"] != data[i]["Capacity"]
                 and config["capacity"] != "All"
