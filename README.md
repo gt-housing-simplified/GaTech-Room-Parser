@@ -19,7 +19,7 @@ Capacity (Room Type):
 > `-c <Double, Triple, Quad, Suite, 2 person, 4 person, 6 person, All>`
 
 bed_empty (Beds in room for -e and -er to be true):
->   -C <int>
+>   `-C <int>`
 
 
 List Empty Rooms:
