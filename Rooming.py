@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Designed by Ian Boraks
 # https://github.com/Ian-Boraks/GaTech-Room-Parser
 #
@@ -24,13 +26,13 @@
 # List Bed Names:
 #   -b
 #
-# Output to a CSV File: ! WIP -- DO NOT USE !
-#   -csv
+# Output to a File: ! WIP -- DO NOT USE !
+#   -fo
 #
-# Run Silently (Use w/ -csv):
+# Run Silently (Use w/ -fo):
 #   -s
 
-from tabulate import tabulate
+from tabulate import tabulate, SEPARATING_LINE
 import wget
 import json
 import os
@@ -45,12 +47,13 @@ config = {
     "empty": False,
     "rooms": False,
     "beds": False,
-    "csv": False,
+    "file_output": False,
     "silent": False,
 }
 
 # This is the json API url
 url = f"https://housing.gatech.edu/available-rooms-dir/FreeRooms.json?_={round(time.time()*1000)}"
+
 try:
     os.remove("FreeRooms.json")
 except:
@@ -59,6 +62,8 @@ filename = wget.download(url)
 print()
 
 dorms, empty = {}, {}
+
+final_file_table = []
 
 
 def checkRoom(room):
@@ -86,6 +91,8 @@ def getEmpty(rooms, bed_letters):
 
 
 def printRoomData(data):
+    global final_file_table
+
     tableDorms, beds, empty_counts, rooms = [], [], [], []
 
     for name, data in dorms.items():
@@ -149,7 +156,6 @@ def printRoomData(data):
 
     if config["empty"] or config["rooms"] or config["beds"]:
         for i in range(len(tableDorms)):
-            print(tableDorms[i][0])
             table = [["Beds Left", tableDorms[i][1]]]
             if config["beds"]:
                 table.append(["", ", ".join(beds[i])])
@@ -171,16 +177,35 @@ def printRoomData(data):
                     for room_type, rms in rooms[i].items()
                 ]:
                     table.append(["", rooms_per_type])
-            print(tabulate(table, maxcolwidths=[None, 150]))
-            print()
+
+            if config["file_output"]:
+                with open("output.html", "a") as f:
+                    f.write("<b>" + tableDorms[i][0] + "</b>")
+                    f.write(tabulate(table, maxcolwidths=[None, 150], tablefmt="html"))
+                    f.write("<br>")
+                    f.close()
+
+            else:
+                print(tableDorms[i][0])
+                print(tabulate(table, maxcolwidths=[None, 150]))
+                print()
     else:
-        print(tabulate(tableDorms, headers=["Dorm", "Beds Left"]))
+        if config["file_output"]:
+            with open("output.html", "a") as f:
+                f.write(tabulate(tableDorms, headers=["Dorm", "Beds Left"]))
+                f.close()
+        else:
+            print(tabulate(tableDorms, headers=["Dorm", "Beds Left"]))
 
 
 def main():
-    if config["csv"]:
-        config["gender"] = "All"
-        config["capacity"] = "All"
+    global final_file_table
+
+    if config["file_output"]:
+        tabulate.PRESERVE_WHITESPACE = True
+        with open("output.html", "w") as f:
+            f.write("")
+            f.close()
 
     with open("FreeRooms.json") as json_file:
         data = json.load(json_file)
@@ -204,9 +229,25 @@ def main():
             )
             print(config)
             print()
-            printRoomData(data)
+            printRoomData(final_file_table)
         else:
             print("Updated on: " + data[0]["LastUpdated"])
+
+    # if config["file_output"]:
+    #     with open("output.html", "a") as f:
+    #         if config["empty"] or config["rooms"] or config["beds"]:
+    #             f.write(
+    #                 tabulate(
+    #                     final_file_table, maxcolwidths=[None, 150], tablefmt="html"
+    #                 )
+    #             )
+    #         else:
+    #             f.write(
+    #                 tabulate(
+    #                     final_file_table, headers=["Dorm", "Beds Left"], tablefmt="html"
+    #                 )
+    #             )
+    #         f.close()
 
 
 if __name__ == "__main__":
@@ -224,8 +265,8 @@ if __name__ == "__main__":
             config["rooms"] = True
         if "-b" in sys.argv:
             config["beds"] = True
-        if "-csv" in sys.argv:
-            config["csv"] = True
+        if "-fo" in sys.argv:
+            config["file_output"] = True
         if "-s" in sys.argv:
             config["silent"] = True
     except IndexError:

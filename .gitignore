@@ -2,3 +2,4 @@ FreeRooms.json
 *.csv
 .env
 .vscode
+*.html
