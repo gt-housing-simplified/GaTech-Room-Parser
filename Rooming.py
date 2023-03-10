@@ -24,10 +24,10 @@
 # List Bed Names:
 #   -b
 #
-# Output to a CSV File: ! WIP -- DO NOT USE !
-#   -csv
+# Output to a File: ! WIP -- DO NOT USE !
+#   -fo
 #
-# Run Silently (Use w/ -csv):
+# Run Silently (Use w/ -fo):
 #   -s
 
 from tabulate import tabulate
@@ -45,7 +45,7 @@ config = {
     "empty": False,
     "rooms": False,
     "beds": False,
-    "csv": False,
+    "file_output": False,
     "silent": False,
 }
 
@@ -59,6 +59,8 @@ filename = wget.download(url)
 print()
 
 dorms, empty = {}, {}
+
+final_file_table = []
 
 
 def checkRoom(room):
@@ -86,6 +88,8 @@ def getEmpty(rooms, bed_letters):
 
 
 def printRoomData(data):
+    global final_file_table
+
     tableDorms, beds, empty_counts, rooms = [], [], [], []
 
     for name, data in dorms.items():
@@ -171,16 +175,28 @@ def printRoomData(data):
                     for room_type, rms in rooms[i].items()
                 ]:
                     table.append(["", rooms_per_type])
-            print(tabulate(table, maxcolwidths=[None, 150]))
-            print()
+
+            if config["file_output"]:
+                # final_file_table.append([tableDorms[i][0]])
+                final_file_table.extend(table)
+            else:
+                print(tabulate(table, maxcolwidths=[None, 150]))
+                print()
     else:
-        print(tabulate(tableDorms, headers=["Dorm", "Beds Left"]))
+        if config["file_output"]:
+            final_file_table.extend(tableDorms)
+        else:
+            print(tabulate(tableDorms, headers=["Dorm", "Beds Left"]))
 
 
 def main():
-    if config["csv"]:
-        config["gender"] = "All"
-        config["capacity"] = "All"
+    global final_file_table
+
+    if config["file_output"]:
+        tabulate.PRESERVE_WHITESPACE = True
+        with open("output.html", "w") as f:
+            f.write("")
+            f.close()
 
     with open("FreeRooms.json") as json_file:
         data = json.load(json_file)
@@ -204,9 +220,25 @@ def main():
             )
             print(config)
             print()
-            printRoomData(data)
+            printRoomData(final_file_table)
         else:
             print("Updated on: " + data[0]["LastUpdated"])
+
+    if config["file_output"]:
+        with open("output.html", "a") as f:
+            if config["empty"] or config["rooms"] or config["beds"]:
+                f.write(
+                    tabulate(
+                        final_file_table, maxcolwidths=[None, 150], tablefmt="html"
+                    )
+                )
+            else:
+                f.write(
+                    tabulate(
+                        final_file_table, headers=["Dorm", "Beds Left"], tablefmt="html"
+                    )
+                )
+            f.close()
 
 
 if __name__ == "__main__":
@@ -224,8 +256,8 @@ if __name__ == "__main__":
             config["rooms"] = True
         if "-b" in sys.argv:
             config["beds"] = True
-        if "-csv" in sys.argv:
-            config["csv"] = True
+        if "-fo" in sys.argv:
+            config["file_output"] = True
         if "-s" in sys.argv:
             config["silent"] = True
     except IndexError:
