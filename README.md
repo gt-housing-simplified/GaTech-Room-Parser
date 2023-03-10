@@ -30,9 +30,9 @@ List Bed Names:
 
 > `-b`
 
-Output to a CSV File: ! WIP -- DO NOT USE !
+Output to a HTML File:
 
-> `-csv`
+> `-fo`
 
 Run Silently (Use w/ -csv):
 
