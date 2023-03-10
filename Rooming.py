@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Designed by Ian Boraks
 # https://github.com/Ian-Boraks/GaTech-Room-Parser
 #
@@ -30,7 +32,7 @@
 # Run Silently (Use w/ -fo):
 #   -s
 
-from tabulate import tabulate
+from tabulate import tabulate, SEPARATING_LINE
 import wget
 import json
 import os
@@ -51,6 +53,7 @@ config = {
 
 # This is the json API url
 url = f"https://housing.gatech.edu/available-rooms-dir/FreeRooms.json?_={round(time.time()*1000)}"
+
 try:
     os.remove("FreeRooms.json")
 except:
@@ -177,14 +180,20 @@ def printRoomData(data):
                     table.append(["", rooms_per_type])
 
             if config["file_output"]:
-                # final_file_table.append([tableDorms[i][0]])
-                final_file_table.extend(table)
+                with open("output.html", "a") as f:
+                    f.write("<b>" + tableDorms[i][0] + "</b>")
+                    f.write(tabulate(table, maxcolwidths=[None, 150], tablefmt="html"))
+                    f.write("<br>")
+                    f.close()
+
             else:
                 print(tabulate(table, maxcolwidths=[None, 150]))
                 print()
     else:
         if config["file_output"]:
-            final_file_table.extend(tableDorms)
+            with open("output.html", "a") as f:
+                f.write(tabulate(tableDorms, headers=["Dorm", "Beds Left"]))
+                f.close()
         else:
             print(tabulate(tableDorms, headers=["Dorm", "Beds Left"]))
 
@@ -224,21 +233,21 @@ def main():
         else:
             print("Updated on: " + data[0]["LastUpdated"])
 
-    if config["file_output"]:
-        with open("output.html", "a") as f:
-            if config["empty"] or config["rooms"] or config["beds"]:
-                f.write(
-                    tabulate(
-                        final_file_table, maxcolwidths=[None, 150], tablefmt="html"
-                    )
-                )
-            else:
-                f.write(
-                    tabulate(
-                        final_file_table, headers=["Dorm", "Beds Left"], tablefmt="html"
-                    )
-                )
-            f.close()
+    # if config["file_output"]:
+    #     with open("output.html", "a") as f:
+    #         if config["empty"] or config["rooms"] or config["beds"]:
+    #             f.write(
+    #                 tabulate(
+    #                     final_file_table, maxcolwidths=[None, 150], tablefmt="html"
+    #                 )
+    #             )
+    #         else:
+    #             f.write(
+    #                 tabulate(
+    #                     final_file_table, headers=["Dorm", "Beds Left"], tablefmt="html"
+    #                 )
+    #             )
+    #         f.close()
 
 
 if __name__ == "__main__":
