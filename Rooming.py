@@ -14,6 +14,9 @@
 # Capacity (Room Type):
 #   -c <Double, Triple, Quad, Suite, 2 person, 4 person, 6 person, All>
 #
+# bed_empty (Beds in room for -e and -er to be true):
+#   -C <int>
+#
 # List Empty Rooms:
 #   1. -e   (will list just the empty room count)
 #   2. -er  (will list both the count and the room names)
@@ -38,6 +41,7 @@ import time
 config = {
   'gender': 'All',
   'capacity': 'All',
+  'bed_empty': 0,
   'empty': False,
   'rooms': False,
   'beds': False,
@@ -72,8 +76,18 @@ def getRoom(room_type, room, truncate=1):
 def getEmpty(rooms, bed_letters):
   empty_list = []
   for room in rooms[1]:
-    if all(bed in rooms[0] for bed in (room + bed_i for bed_i in bed_letters)):
-      empty_list.append(room)
+    count = 0
+    if config['bed_empty'] == 0:
+      if all(bed in rooms[0] for bed in (room + bed_i for bed_i in bed_letters)):
+        empty_list.append(room)
+
+    else:
+      for bed_i in bed_letters:
+        if room + bed_i not in rooms[0]:
+          count += 1
+      
+      if count >= config['bed_empty']:
+        empty_list.append(room)
   return empty_list
 
 
@@ -159,6 +173,8 @@ if __name__ == "__main__":
       config['gender'] = sys.argv[sys.argv.index('-g') + 1]
     if ('-c' in sys.argv):
       config['capacity'] = sys.argv[sys.argv.index('-c') + 1]
+    if ('-C' in sys.argv):
+      config['bed_empty'] = int(sys.argv[sys.argv.index('-C') + 1])
     if ('-e' in sys.argv):
       config['empty'] = True
     if ('-er' in sys.argv):
