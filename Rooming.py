@@ -156,7 +156,6 @@ def printRoomData(data):
 
     if config["empty"] or config["rooms"] or config["beds"]:
         for i in range(len(tableDorms)):
-            print(tableDorms[i][0])
             table = [["Beds Left", tableDorms[i][1]]]
             if config["beds"]:
                 table.append(["", ", ".join(beds[i])])
@@ -187,6 +186,7 @@ def printRoomData(data):
                     f.close()
 
             else:
+                print(tableDorms[i][0])
                 print(tabulate(table, maxcolwidths=[None, 150]))
                 print()
     else:
