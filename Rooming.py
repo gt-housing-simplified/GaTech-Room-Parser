@@ -76,18 +76,12 @@ def getRoom(room_type, room, truncate=1):
 def getEmpty(rooms, bed_letters):
     empty_list = []
     for room in rooms[1]:
-        count = 0
-        if config["bed_empty"] == 0:
-            if all(bed in rooms[0] for bed in (room + bed_i for bed_i in bed_letters)):
-                empty_list.append(room)
+        if (
+            sum(bed in rooms[0] for bed in (room + bed_i for bed_i in bed_letters))
+            >= config["bed_empty"]
+        ):
+            empty_list.append(room)
 
-        else:
-            for bed_i in bed_letters:
-                if room + bed_i not in rooms[0]:
-                    count += 1
-
-            if count >= config["bed_empty"]:
-                empty_list.append(room)
     return empty_list
 
 
@@ -109,8 +103,12 @@ def printRoomData(data):
                     "Suite Room",
                     "Suite",
                     "2 person",
+                    "3 person",
                     "4 person",
+                    "4 person short",
+                    "5 person",
                     "6 person",
+                    "7 person",
                 ]
             }
 
@@ -127,9 +125,17 @@ def printRoomData(data):
             empty["Suite Room"] = getEmpty(empty["Suite Room"], ["a", "b"])
             empty["Suite"] = getEmpty(empty["Suite"], ["Aa", "Ab", "Ba", "Bb"])
             empty["2 person"] = getEmpty(empty["2 person"], ["A", "B"])
+            empty["3 person"] = getEmpty(empty["3 person"], ["A", "B", "C"])
             empty["4 person"] = getEmpty(empty["4 person"], ["A", "B", "C", "D"])
+            empty["4 person short"] = getEmpty(
+                empty["4 person short"], ["A", "B", "C", "D"]
+            )
+            empty["5 person"] = getEmpty(empty["5 person"], ["A", "B", "C", "D", "E"])
             empty["6 person"] = getEmpty(
                 empty["6 person"], ["A", "B", "C", "D", "E", "F"]
+            )
+            empty["7 person"] = getEmpty(
+                empty["7 person"], ["A", "B", "C", "D", "E", "F", "G"]
             )
 
             empty = {room_type: rooms for room_type, rooms in empty.items() if rooms}
@@ -182,7 +188,9 @@ def main():
 
         for i in range(0, length):
             if (
-                config["gender"] != data[i]["Gender"] and config["gender"] != "All" and data[i]["Gender"] != "Dynamic"
+                config["gender"] != data[i]["Gender"]
+                and config["gender"] != "All"
+                and data[i]["Gender"] != "Dynamic"
             ) or (
                 config["capacity"] != data[i]["Capacity"]
                 and config["capacity"] != "All"

@@ -1,3 +1,4 @@
 FreeRooms.json
 *.csv
 .env
+.vscode
